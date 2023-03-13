@@ -1,3 +1,8 @@
+import { Link } from "react-router-dom";
 export default function Header() {
-  return <h1 class="display-1">InsightCorner</h1>;
+  return (
+    <Link to="/">
+      <h1 className="display-1">InsightCorner</h1>
+    </Link>
+  );
 }
