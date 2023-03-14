@@ -10,3 +10,9 @@ export const allArticles = (article_id) => {
     return data.articles;
   });
 };
+
+export const getCommentsByArticleId = (article_id) => {
+  return articleAPI.get(`/articles/${article_id}/comments`).then(({ data }) => {
+    return data.comments;
+  });
+};

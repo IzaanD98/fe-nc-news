@@ -7,6 +7,7 @@ export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const { article_id } = useParams();
+
   useEffect(() => {
     setLoading(true);
     allArticles(article_id).then((data) => {

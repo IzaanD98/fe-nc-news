@@ -28,6 +28,8 @@ export default function Navigation() {
             </Nav.Item>
             <Nav.Item className="user-info">
               <Nav.Link>
+                <p>Logged in as:</p>
+                <br />
                 <img className="user-icon" src={user.avatar_url} alt="user" />
                 <p>{user.username}</p>
               </Nav.Link>
