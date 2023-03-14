@@ -10,9 +10,11 @@ export default function CommentAdder({ setComments, setNewComment }) {
   const user = useContext(UserContext);
   const { article_id } = useParams();
   const [commentToAdd, setCommentToAdd] = useState("");
+  const [postingComment, setPostingComment] = useState(false);
 
   const handleSumbit = (event) => {
     event.preventDefault();
+    setPostingComment(true);
     const newComment = {
       username: user.username,
       body: commentToAdd,
@@ -23,9 +25,11 @@ export default function CommentAdder({ setComments, setNewComment }) {
           return [...currentComments, newCommentFromApi];
         });
         setNewComment({});
+        setPostingComment(false);
         alert("Comment has been posted");
       })
       .catch((error) => {
+        setPostingComment(false);
         alert("failed to post comment, please try again");
       });
   };
@@ -46,8 +50,8 @@ export default function CommentAdder({ setComments, setNewComment }) {
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Submit
+      <Button variant="primary" type="submit" disabled={postingComment}>
+        {postingComment ? "Posting..." : "Submit"}
       </Button>
     </Form>
   );
