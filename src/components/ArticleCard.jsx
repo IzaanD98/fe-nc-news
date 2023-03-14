@@ -4,8 +4,10 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Comments from "./Comments";
 import { voteForArticle } from "../utils/api";
+import { useState } from "react";
 
 export const ArticleCard = ({ articles, setArticles }) => {
+  const [errorMessage, setErrorMessage] = useState("");
   const Vote = (id, number) => {
     setArticles((currentArticles) => {
       return currentArticles.map((article) => {
@@ -15,21 +17,21 @@ export const ArticleCard = ({ articles, setArticles }) => {
         return article;
       });
     });
-    voteForArticle(id, number).catch(() => {
-      if (number === 1) {
-        number = -1;
-      } else if (number === -1) {
-        number = 1;
-      }
-      setArticles((currentArticles) => {
-        return currentArticles.map((article) => {
-          if (article.article_id === id) {
-            return { ...article, votes: article.votes + number };
-          }
-          return article;
+    voteForArticle(id, number)
+      .then(() => {
+        setErrorMessage("");
+      })
+      .catch(() => {
+        setErrorMessage("Failed to update vote count. Please try again later.");
+        setArticles((currentArticles) => {
+          return currentArticles.map((article) => {
+            if (article.article_id === id) {
+              return { ...article, votes: article.votes - number };
+            }
+            return article;
+          });
         });
       });
-    });
   };
   return (
     <div className="container my-5">
@@ -84,6 +86,9 @@ export const ArticleCard = ({ articles, setArticles }) => {
                       Downvote
                     </Button>
                   </div>
+                  {errorMessage && (
+                    <span className="text-danger">{errorMessage}</span>
+                  )}
                   <br />
                   <br />
                   <div className="card-buttons">
