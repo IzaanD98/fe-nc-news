@@ -55,13 +55,20 @@ export const ArticleCard = ({ articles, setArticles }) => {
                   className="d-flex flex-column card-body-height"
                   id={articles.length > 1 ? "card-sizing" : undefined}
                 >
-                  <div className="mb-2">
+                  <div className="mb-2 article-info">
                     <Link to={`/articles/${article.article_id}`}>
-                      <Card.Title>{article.title}</Card.Title>
+                      <Card.Title>
+                        {article.title.length > 50 && articles.length > 1
+                          ? `${article.title.slice(0, 65)}...`
+                          : article.title}
+                      </Card.Title>
                     </Link>
-                    <small className="font-weight-bold">
-                      Posted By: {article.author}
-                    </small>
+                    <div>
+                      <Card.Text> {article.created_at}</Card.Text>
+                      <small className="font-weight-bold">
+                        Posted By: {article.author}
+                      </small>
+                    </div>
                   </div>
                   <Card.Text>Topic: {article.topic}</Card.Text>
                   {articles.length === 1 && (
@@ -89,7 +96,6 @@ export const ArticleCard = ({ articles, setArticles }) => {
                   {errorMessage && (
                     <span className="text-danger">{errorMessage}</span>
                   )}
-                  <br />
                   <br />
                   <div className="card-buttons">
                     <Link to={`/articles/${article.article_id}`}>

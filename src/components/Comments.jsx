@@ -3,10 +3,12 @@ import { getCommentsByArticleId } from "../utils/api";
 import { useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import CommentAdder from "./CommentAdder";
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [newComment, setNewComment] = useState({});
   const { article_id } = useParams();
 
   useEffect(() => {
@@ -17,15 +19,15 @@ export default function Comments() {
         setLoading(false);
       });
     }
-  }, [article_id]);
+  }, [article_id, newComment]);
 
   if (loading) {
     return <h2>Loading...</h2>;
   }
-
   return (
     <div className="container my-5">
       <div className="row row-cols-1">
+        <CommentAdder setComments={setComments} setNewComment={setNewComment} />
         {comments.map((comment) => {
           return (
             <div key={comment.comment_id} className="col">

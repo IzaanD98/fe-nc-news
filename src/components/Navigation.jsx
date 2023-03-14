@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/User";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function Navigation() {
   const user = useContext(UserContext);
@@ -13,22 +15,30 @@ export default function Navigation() {
           <Nav className="ml-auto">
             <Nav.Item>
               <Nav.Link>
-                <select>
+                <Form.Select size="md">
                   <option>Filter</option>
                   <option>Cooking</option>
                   <option>Coding</option>
                   <option>Eating</option>
-                </select>
+                </Form.Select>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link>
-                <input type="text" placeholder="Search" />
+                <InputGroup size="md">
+                  <InputGroup.Text id="inputGroup-sizing-lg">
+                    Search
+                  </InputGroup.Text>
+                  <Form.Control
+                    aria-label="Large"
+                    aria-describedby="inputGroup-sizing-sm"
+                  />
+                </InputGroup>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="user-info">
               <Nav.Link>
-                <p>Logged in as:</p>
+                <span>Logged in as:</span>
                 <br />
                 <img className="user-icon" src={user.avatar_url} alt="user" />
                 <p>{user.username}</p>
