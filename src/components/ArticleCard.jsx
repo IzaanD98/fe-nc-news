@@ -3,8 +3,34 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import Comments from "./Comments";
+import { voteForArticle } from "../utils/api";
 
-export const ArticleCard = ({ articles }) => {
+export const ArticleCard = ({ articles, setArticles }) => {
+  const Vote = (id, number) => {
+    setArticles((currentArticles) => {
+      return currentArticles.map((article) => {
+        if (article.article_id === id) {
+          return { ...article, votes: article.votes + number };
+        }
+        return article;
+      });
+    });
+    voteForArticle(id, number).catch(() => {
+      if (number === 1) {
+        number = -1;
+      } else if (number === -1) {
+        number = 1;
+      }
+      setArticles((currentArticles) => {
+        return currentArticles.map((article) => {
+          if (article.article_id === id) {
+            return { ...article, votes: article.votes + number };
+          }
+          return article;
+        });
+      });
+    });
+  };
   return (
     <div className="container my-5">
       <div
@@ -23,7 +49,10 @@ export const ArticleCard = ({ articles }) => {
                   src={article.article_img_url}
                   className="card-img-top rounded-top"
                 />
-                <Card.Body className="d-flex flex-column card-body-height">
+                <Card.Body
+                  className="d-flex flex-column card-body-height"
+                  id={articles.length > 1 ? "card-sizing" : undefined}
+                >
                   <div className="mb-2">
                     <Link to={`/articles/${article.article_id}`}>
                       <Card.Title>{article.title}</Card.Title>
@@ -33,13 +62,27 @@ export const ArticleCard = ({ articles }) => {
                     </small>
                   </div>
                   <Card.Text>Topic: {article.topic}</Card.Text>
-                  <Card.Text className="flex-grow-1">{article.body}</Card.Text>
+                  {articles.length === 1 && (
+                    <Card.Text className="flex-grow-1">
+                      {article.body}
+                    </Card.Text>
+                  )}
                   <div className="card-buttons">
-                    <Button variant="secondary">Upvote</Button>
+                    <Button
+                      onClick={() => Vote(article.article_id, 1)}
+                      variant="secondary"
+                    >
+                      Upvote
+                    </Button>
                     <Button variant={article.votes >= 0 ? "success" : "danger"}>
                       {article.votes}
                     </Button>
-                    <Button variant="secondary">Downvote</Button>
+                    <Button
+                      onClick={() => Vote(article.article_id, -1)}
+                      variant="secondary"
+                    >
+                      Downvote
+                    </Button>
                   </div>
                   <br />
                   <br />
