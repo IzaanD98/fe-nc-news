@@ -18,7 +18,11 @@ export default function Articles() {
 
   return (
     <main>
-      {loading ? <h2>Loading....</h2> : <ArticleCard articles={articles} />}
+      {loading ? (
+        <h2>Loading....</h2>
+      ) : (
+        <ArticleCard articles={articles} setArticles={setArticles} />
+      )}
     </main>
   );
 }

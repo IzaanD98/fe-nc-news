@@ -16,3 +16,11 @@ export const getCommentsByArticleId = (article_id) => {
     return data.comments;
   });
 };
+
+export const voteForArticle = (article_id, number) => {
+  return articleAPI
+    .patch(`/articles/${article_id}`, { inc_votes: number })
+    .then(({ data }) => {
+      return data.article;
+    });
+};

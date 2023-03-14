@@ -98,3 +98,7 @@
 .card-buttons button {
   height: fit-content;
 }
+
+#card-sizing {
+  height: 300px;
+}
