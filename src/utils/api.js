@@ -24,3 +24,11 @@ export const voteForArticle = (article_id, number) => {
       return data.article;
     });
 };
+
+export const postCommentForArticle = (article_id, comment) => {
+  return articleAPI
+    .post(`/articles/${article_id}/comments`, comment)
+    .then(({ data }) => {
+      return data.newItem;
+    });
+};
