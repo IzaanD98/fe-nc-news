@@ -18,7 +18,10 @@ export default function Navigation() {
   }, []);
 
   const handleSelect = (event) => {
-    if (event.target.value) {
+    console.log(event.target.value);
+    if (event.target.value === "All") {
+      navigate(`/`);
+    } else {
       navigate(`articles?topic=${event.target.value}`);
     }
   };
@@ -32,7 +35,7 @@ export default function Navigation() {
             <Nav.Item>
               <Nav.Link>
                 <Form.Select onChange={handleSelect} size="md">
-                  <option disabled>Filter</option>
+                  <option value="All">All</option>
                   {topics.map((topic) => {
                     return (
                       <option key={topic.slug} value={topic.slug}>
