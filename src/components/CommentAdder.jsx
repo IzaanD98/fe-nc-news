@@ -41,7 +41,14 @@ export default function CommentAdder({ setComments, setNewComment }) {
   return (
     <Form onSubmit={handleSumbit}>
       <Form.Group className="mb-3" controlId="commentInput">
-        <img className="user-icon" src={user.avatar_url} alt="user" />
+        <section>
+          <img
+            style={{ float: "left", marginBottom: "10px" }}
+            className="user-icon"
+            src={user.avatar_url}
+            alt="user"
+          />
+        </section>
         <Form.Control
           as="textarea"
           rows={3}
@@ -50,7 +57,12 @@ export default function CommentAdder({ setComments, setNewComment }) {
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit" disabled={postingComment}>
+      <Button
+        style={{ float: "right", marginBottom: "10px" }}
+        variant="primary"
+        type="submit"
+        disabled={postingComment}
+      >
         {postingComment ? "Posting..." : "Submit"}
       </Button>
     </Form>

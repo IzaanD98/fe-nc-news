@@ -1,11 +1,27 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/User";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { getAllTopics } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Navigation() {
+  const [topics, setTopics] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getAllTopics().then((data) => {
+      setTopics(data);
+    });
+  }, []);
+
+  const handleSelect = (event) => {
+    if (event.target.value) {
+      navigate(`articles?topic=${event.target.value}`);
+    }
+  };
   const user = useContext(UserContext);
   return (
     <>
@@ -15,23 +31,25 @@ export default function Navigation() {
           <Nav className="ml-auto">
             <Nav.Item>
               <Nav.Link>
-                <Form.Select size="md">
-                  <option>Filter</option>
-                  <option>Cooking</option>
-                  <option>Coding</option>
-                  <option>Eating</option>
+                <Form.Select onChange={handleSelect} size="md">
+                  <option disabled>Filter</option>
+                  {topics.map((topic) => {
+                    return (
+                      <option key={topic.slug} value={topic.slug}>
+                        {topic.slug}
+                      </option>
+                    );
+                  })}
                 </Form.Select>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link>
-                <InputGroup size="md">
-                  <InputGroup.Text id="inputGroup-sizing-lg">
-                    Search
-                  </InputGroup.Text>
+                <InputGroup className="mb-3">
                   <Form.Control
-                    aria-label="Large"
-                    aria-describedby="inputGroup-sizing-sm"
+                    placeholder="Search"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
                   />
                 </InputGroup>
               </Nav.Link>
