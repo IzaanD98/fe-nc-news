@@ -35,6 +35,10 @@ export default function Comments() {
                 <Card.Body className="d-flex flex-column">
                   <div className="mb-2">
                     <big className="font-weight-bold">{comment.author}</big>
+                    <br />
+                    <small className="font-weight-bold">
+                      {comment.created_at}
+                    </small>
                   </div>
                   <Card.Text className="flex-grow-1">{comment.body}</Card.Text>
                   <div className="card-buttons">
