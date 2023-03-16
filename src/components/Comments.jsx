@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import CommentAdder from "./CommentAdder";
 import { deleteCommentById } from "../utils/api";
 import Alert from "react-bootstrap/Alert";
+import { voteForComment } from "../utils/api";
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
@@ -18,6 +19,8 @@ export default function Comments() {
   const { article_id } = useParams();
   const [postedComment, setPostedComment] = useState(false);
   const [failedPostedComment, setFailedPostedComment] = useState(false);
+  const [error, setError] = useState(null);
+  const [commentWithError, setCommentWithError] = useState(null);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -49,6 +52,34 @@ export default function Comments() {
       return () => clearTimeout(timer);
     }
   }, [postedComment, failedPostedComment]);
+
+  const handleVote = (comment_id, number) => {
+    setComments((currentComments) => {
+      return currentComments.map((comment) => {
+        if (comment.comment_id === comment_id) {
+          return { ...comment, votes: comment.votes + number };
+        }
+        return comment;
+      });
+    });
+    voteForComment(comment_id, number)
+      .then(() => {
+        setError("");
+        setCommentWithError(null);
+      })
+      .catch(() => {
+        setError("Failed to update vote count, Please try again later");
+        setCommentWithError(comment_id);
+        setComments((currentComments) => {
+          return currentComments.map((comment) => {
+            if (comment.comment_id === comment_id) {
+              return { ...comment, votes: comment.votes - number };
+            }
+            return comment;
+          });
+        });
+      });
+  };
 
   const deleteComment = (comment_id) => {
     setDeleting(true);
@@ -121,7 +152,11 @@ export default function Comments() {
                   </div>
                   <Card.Text className="flex-grow-1">{comment.body}</Card.Text>
                   <div className="card-buttons">
-                    <Button className="button" variant="secondary">
+                    <Button
+                      className="button"
+                      variant="secondary"
+                      onClick={() => handleVote(comment.comment_id, 1)}
+                    >
                       Upvote
                     </Button>
                     <Button
@@ -130,10 +165,17 @@ export default function Comments() {
                     >
                       {comment.votes}
                     </Button>
-                    <Button className="button" variant="secondary">
+                    <Button
+                      className="button"
+                      variant="secondary"
+                      onClick={() => handleVote(comment.comment_id, -1)}
+                    >
                       Downvote
                     </Button>
                   </div>
+                  {error && commentWithError === comment.comment_id && (
+                    <span className="text-danger">{error}</span>
+                  )}
                 </Card.Body>
               </Card>
             </div>

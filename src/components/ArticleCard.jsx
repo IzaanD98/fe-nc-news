@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export const ArticleCard = ({ articles, setArticles }) => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [articleWithError, setArticleWithError] = useState(null);
   const Vote = (id, number) => {
     setArticles((currentArticles) => {
       return currentArticles.map((article) => {
@@ -19,9 +20,11 @@ export const ArticleCard = ({ articles, setArticles }) => {
     voteForArticle(id, number)
       .then(() => {
         setErrorMessage("");
+        setArticleWithError(null);
       })
       .catch(() => {
         setErrorMessage("Failed to update vote count. Please try again later.");
+        setArticleWithError(id);
         setArticles((currentArticles) => {
           return currentArticles.map((article) => {
             if (article.article_id === id) {
@@ -88,7 +91,7 @@ export const ArticleCard = ({ articles, setArticles }) => {
                       Downvote
                     </Button>
                   </div>
-                  {errorMessage && (
+                  {errorMessage && articleWithError === article.article_id && (
                     <span className="text-danger">{errorMessage}</span>
                   )}
                   <br />

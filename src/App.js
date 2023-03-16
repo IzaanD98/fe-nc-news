@@ -6,6 +6,7 @@ import Articles from "./components/Articles";
 import { SingleArticle } from "./components/SingleArticle";
 import { ThemeContext } from "./contexts/Theme";
 import { useContext, useState } from "react";
+import Footer from "./components/Footer";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -58,6 +59,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </div>
   );
 }

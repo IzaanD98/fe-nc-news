@@ -55,3 +55,11 @@ export const deleteCommentById = (comment_id) => {
     return data.articles;
   });
 };
+
+export const voteForComment = (comment_id, number) => {
+  return articleAPI
+    .patch(`/comments/${comment_id}`, { inc_votes: number })
+    .then(({ data }) => {
+      return data.comments;
+    });
+};
