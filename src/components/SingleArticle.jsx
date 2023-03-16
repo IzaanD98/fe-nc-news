@@ -7,6 +7,10 @@ import { voteForArticle } from "../utils/api";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleArticle } from "../utils/api";
+import { deleteArticleById } from "../utils/api";
+import { useContext } from "react";
+import { UserContext } from "../contexts/User";
+import { useNavigate } from "react-router-dom";
 
 export const SingleArticle = ({ setIsSingleArticle }) => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,6 +18,9 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+  const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   useEffect(() => {
     setError(null);
@@ -54,6 +61,21 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
         });
       });
   };
+
+  const handleDelete = (article_id) => {
+    setDeleting(true);
+    deleteArticleById(article_id)
+      .then((data) => {
+        setDeleting(false);
+        alert("Successfully Deleted Article");
+        navigate("/");
+      })
+      .catch((error) => {
+        setDeleting(false);
+        alert("Failed to delete article, please try again");
+      });
+  };
+
   if (error) {
     return (
       <h2 className="text-center" style={{ color: "red" }}>
@@ -88,6 +110,17 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
                       <Card.Text>Topic: {a.topic}</Card.Text>
                       <p className="font-weight-bold">Posted By: {a.author}</p>
                       <br />
+                    </div>
+                    <div className="card-buttons">
+                      {user.username === a.author && (
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDelete(a.article_id)}
+                          disabled={deleting}
+                        >
+                          {deleting ? "Delete" : "Deleting"}
+                        </Button>
+                      )}
                     </div>
                   </div>
                   <Card.Text className="flex-grow-1">{a.body}</Card.Text>

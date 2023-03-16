@@ -63,3 +63,9 @@ export const voteForComment = (comment_id, number) => {
       return data.comments;
     });
 };
+
+export const deleteArticleById = (article_id) => {
+  return articleAPI.delete(`/articles/${article_id}`).then(({ data }) => {
+    return data.articles;
+  });
+};
