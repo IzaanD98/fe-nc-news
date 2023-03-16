@@ -7,25 +7,27 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export default function Articles() {
-  const [articles, setArticles] = useState([]);
+export default function Articles({ articles, setArticles }) {
   const [loading, setLoading] = useState(true);
   const { article_id } = useParams();
   const query = useQuery();
   const topic = query.get("topic");
+  const sort_by = query.get("sort_by");
+  const order = query.get("order");
+  const limit = query.get("limit");
 
   useEffect(() => {
     setLoading(true);
-    allArticles(article_id, topic).then((data) => {
+    allArticles(topic, sort_by, order, limit).then((data) => {
       setArticles(data);
       setLoading(false);
     });
-  }, [article_id, topic]);
+  }, [article_id, topic, sort_by, order, limit, setArticles]);
 
   return (
     <main>
       {loading ? (
-        <h2>Loading....</h2>
+        <h2 className="loading">Loading....</h2>
       ) : (
         <ArticleCard articles={articles} setArticles={setArticles} />
       )}

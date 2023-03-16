@@ -2,13 +2,28 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import Comments from "./Comments";
 import { voteForArticle } from "../utils/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getSingleArticle } from "../utils/api";
 
-export const ArticleCard = ({ articles, setArticles }) => {
+export const SingleArticle = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const { article_id } = useParams();
+  const [article, setArticle] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    getSingleArticle(article_id).then((data) => {
+      setArticle(data);
+      setLoading(false);
+    });
+  }, [article_id]);
+
   const Vote = (id, number) => {
-    setArticles((currentArticles) => {
+    setArticle((currentArticles) => {
       return currentArticles.map((article) => {
         if (article.article_id === id) {
           return { ...article, votes: article.votes + number };
@@ -22,7 +37,7 @@ export const ArticleCard = ({ articles, setArticles }) => {
       })
       .catch(() => {
         setErrorMessage("Failed to update vote count. Please try again later.");
-        setArticles((currentArticles) => {
+        setArticle((currentArticles) => {
           return currentArticles.map((article) => {
             if (article.article_id === id) {
               return { ...article, votes: article.votes - number };
@@ -32,57 +47,48 @@ export const ArticleCard = ({ articles, setArticles }) => {
         });
       });
   };
+  if (loading) {
+    return <h2 className="loading">Loading....</h2>;
+  }
+
   return (
     <div className="container my-5">
-      <p>
-        {articles[0].total_count
-          ? `Search results: ${articles[0].total_count}`
-          : `Search results: ${articles.length}`}
-      </p>
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {articles.map((article) => {
+      <div className="row row-cols-md-2 justify-content-center">
+        {article.map((a) => {
           return (
-            <div key={article.article_id} className="col">
+            <div key={a.article_id} className="col">
               <Card>
                 <Card.Img
                   variant="top"
-                  src={article.article_img_url}
-                  alt={article.title}
+                  src={a.article_img_url}
+                  alt={a.title}
                   className="card-img-top rounded-top"
                 />
-                <Card.Body
-                  className="d-flex flex-column card-body-height"
-                  id={"card-sizing"}
-                >
+                <Card.Body className="d-flex flex-column card-body-height">
                   <div className="mb-2 article-info">
-                    <Link to={`/articles/${article.article_id}`}>
-                      <Card.Title>
-                        {article.title.length > 50 && articles.length > 1
-                          ? `${article.title.slice(0, 65)}...`
-                          : article.title}
-                      </Card.Title>
+                    <Link to={`/articles/${a.article_id}`}>
+                      <Card.Title>{a.title}</Card.Title>
                     </Link>
                     <div>
-                      <Card.Text> {article.created_at}</Card.Text>
-                      <Card.Text>Topic: {article.topic}</Card.Text>
-                      <p className="font-weight-bold">
-                        Posted By: {article.author}
-                      </p>
+                      <Card.Text> {a.created_at}</Card.Text>
+                      <Card.Text>Topic: {a.topic}</Card.Text>
+                      <p className="font-weight-bold">Posted By: {a.author}</p>
                       <br />
                     </div>
                   </div>
+                  <Card.Text className="flex-grow-1">{a.body}</Card.Text>
                   <div className="card-buttons">
                     <Button
-                      onClick={() => Vote(article.article_id, 1)}
+                      onClick={() => Vote(a.article_id, 1)}
                       variant="secondary"
                     >
                       Upvote
                     </Button>
-                    <Button variant={article.votes >= 0 ? "success" : "danger"}>
-                      {article.votes}
+                    <Button variant={a.votes >= 0 ? "success" : "danger"}>
+                      {a.votes}
                     </Button>
                     <Button
-                      onClick={() => Vote(article.article_id, -1)}
+                      onClick={() => Vote(a.article_id, -1)}
                       variant="secondary"
                     >
                       Downvote
@@ -93,11 +99,14 @@ export const ArticleCard = ({ articles, setArticles }) => {
                   )}
                   <br />
                   <div className="card-buttons">
-                    <Link to={`/articles/${article.article_id}`}>
+                    <Link to={`/articles/${article_id}`}>
                       <Button variant="primary" className="me-2">
-                        View Comments ({article.comment_count})
+                        Comments ({a.comment_count})
                       </Button>
                     </Link>
+                  </div>
+                  <div>
+                    <Comments />
                   </div>
                 </Card.Body>
               </Card>

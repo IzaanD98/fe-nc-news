@@ -2,12 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/User";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import { Form } from "react-bootstrap";
 import { getAllTopics } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import ToggleTheme from "./ToggleTheme";
 
-export default function Navigation() {
+export default function Navigation({
+  selectedTopic,
+  setSelectedTopic,
+  selectedSort,
+  setSelectedSort,
+  selectedOrder,
+  setSelectedOrder,
+}) {
   const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
 
@@ -18,14 +25,55 @@ export default function Navigation() {
   }, []);
 
   const handleSelect = (event) => {
-    console.log(event.target.value);
+    setSelectedTopic(event.target.value);
     if (event.target.value === "All") {
       navigate(`/`);
+      setSelectedSort("");
+      setSelectedOrder("");
     } else {
       navigate(`articles?topic=${event.target.value}`);
+      setSelectedSort("");
+      setSelectedOrder("");
     }
   };
+
+  const handleSort = (event) => {
+    const newSortValue = event.target.value;
+    setSelectedSort(newSortValue);
+
+    if (newSortValue === "none") {
+      if (selectedTopic && selectedTopic !== "All") {
+        navigate(`/articles?topic=${selectedTopic}`);
+      } else {
+        navigate(`/articles`);
+      }
+    } else {
+      if (selectedTopic && selectedTopic !== "All") {
+        navigate(`articles?topic=${selectedTopic}&sort_by=${newSortValue}`);
+      } else {
+        navigate(`/articles?sort_by=${newSortValue}`);
+      }
+    }
+    setSelectedOrder("");
+  };
+
+  const handleOrder = (event) => {
+    setSelectedOrder(event.target.value);
+    if (selectedSort && selectedTopic === "All") {
+      navigate(`/articles?sort_by=${selectedSort}&order=${event.target.value}`);
+    } else if (selectedSort && selectedTopic) {
+      navigate(
+        `articles?topic=${selectedTopic}&sort_by=${selectedSort}&order=${event.target.value}`
+      );
+    } else if (selectedSort && !selectedTopic) {
+      navigate(`/articles?sort_by=${selectedSort}&order=${event.target.value}`);
+    } else {
+      navigate(`/articles?order=${event.target.value}`);
+    }
+  };
+
   const user = useContext(UserContext);
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="md">
@@ -33,28 +81,64 @@ export default function Navigation() {
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item>
-              <Nav.Link>
-                <Form.Select onChange={handleSelect} size="md">
-                  <option value="All">All</option>
-                  {topics.map((topic) => {
-                    return (
-                      <option key={topic.slug} value={topic.slug}>
-                        {topic.slug}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Nav.Link>
+              <div className="nav-link">
+                <label htmlFor="Topic">
+                  Topic
+                  <Form.Select
+                    onChange={handleSelect}
+                    id="Topic"
+                    value={selectedTopic}
+                    size="md"
+                  >
+                    <option value="All">All</option>
+                    {topics.map((topic) => {
+                      return (
+                        <option key={topic.slug} value={topic.slug}>
+                          {topic.slug}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </label>
+              </div>
+            </Nav.Item>
+            <Nav.Item>
+              <div className="nav-link">
+                <label htmlFor="Sort_By">
+                  Sort By
+                  <Form.Select
+                    onChange={handleSort}
+                    id="Sort_By"
+                    value={selectedSort}
+                    size="md"
+                  >
+                    <option>none</option>
+                    <option value="comment_count">comment count</option>
+                    <option value="created_at">date</option>
+                    <option value="votes">votes</option>
+                  </Form.Select>
+                </label>
+              </div>
+            </Nav.Item>
+            <Nav.Item>
+              <div className="nav-link">
+                <label htmlFor="Order">
+                  Order
+                  <Form.Select
+                    onChange={handleOrder}
+                    id="Order"
+                    value={selectedOrder}
+                    size="md"
+                  >
+                    <option value="desc">Descending</option>
+                    <option value="asc">Ascending</option>
+                  </Form.Select>
+                </label>
+              </div>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link>
-                <InputGroup className="mb-3">
-                  <Form.Control
-                    placeholder="Search"
-                    aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default"
-                  />
-                </InputGroup>
+                <ToggleTheme />
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="user-info">
