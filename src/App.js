@@ -13,6 +13,7 @@ function App() {
   const [selectedTopic, setSelectedTopic] = useState("");
   const [selectedSort, setSelectedSort] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
+  const [isSingleArticle, setIsSingleArticle] = useState("false");
 
   return (
     <div className={theme === "light" ? "light-theme" : "dark-theme"}>
@@ -23,6 +24,7 @@ function App() {
         setSelectedSort={setSelectedSort}
         selectedOrder={selectedOrder}
         setSelectedOrder={setSelectedOrder}
+        isSingleArticle={isSingleArticle}
       />
       <Header
         setSelectedOrder={setSelectedOrder}
@@ -32,12 +34,27 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Articles articles={articles} setArticles={setArticles} />}
+          element={
+            <Articles
+              articles={articles}
+              setArticles={setArticles}
+              setIsSingleArticle={setIsSingleArticle}
+            />
+          }
         />
-        <Route path="/articles/:article_id" element={<SingleArticle />} />
+        <Route
+          path="/articles/:article_id"
+          element={<SingleArticle setIsSingleArticle={setIsSingleArticle} />}
+        />
         <Route
           path="/articles"
-          element={<Articles articles={articles} setArticles={setArticles} />}
+          element={
+            <Articles
+              articles={articles}
+              setArticles={setArticles}
+              setIsSingleArticle={setIsSingleArticle}
+            />
+          }
         />
       </Routes>
     </div>

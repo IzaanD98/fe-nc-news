@@ -2,11 +2,15 @@ import { postCommentForArticle } from "../utils/api";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { UserContext } from "../contexts/User";
-import { useContext } from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function CommentAdder({ setComments, setNewComment }) {
+export default function CommentAdder({
+  setComments,
+  setNewComment,
+  setPostedComment,
+  setFailedPostedComment,
+}) {
   const user = useContext(UserContext);
   const { article_id } = useParams();
   const [commentToAdd, setCommentToAdd] = useState("");
@@ -26,11 +30,11 @@ export default function CommentAdder({ setComments, setNewComment }) {
         });
         setNewComment({});
         setPostingComment(false);
-        alert("Comment has been posted");
+        setPostedComment(true);
       })
       .catch((error) => {
         setPostingComment(false);
-        alert("failed to post comment, please try again");
+        setFailedPostedComment(true);
       });
   };
 
@@ -54,6 +58,7 @@ export default function CommentAdder({ setComments, setNewComment }) {
           rows={3}
           placeholder="Add comment"
           onChange={handleChange}
+          required
         />
       </Form.Group>
 
