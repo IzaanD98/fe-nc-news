@@ -1,7 +1,13 @@
-.App {
-  text-align: center;
+.dark-theme * {
+  background-color: #121212;
+  color: #fbf9f9;
 }
-
+.dark-theme {
+  background-color: #121212;
+}
+html {
+  background-color: #121212;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -67,6 +73,10 @@
     align-items: stretch;
   }
 
+  .nav-link {
+    margin-left: 15px;
+  }
+
   .navbar-nav li {
     margin-right: 0;
     margin-bottom: 10px;
@@ -110,5 +120,23 @@
 .article-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  text-align: center;
+}
+
+.button__light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.button__dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.loading {
+  text-align: center;
+}
+
+.font-weight-bold {
+  font-weight: 600;
 }

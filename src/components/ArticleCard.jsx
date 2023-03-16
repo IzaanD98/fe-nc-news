@@ -35,6 +35,7 @@ export const ArticleCard = ({ articles, setArticles }) => {
   };
   return (
     <div className="container my-5">
+      <p>{articles.length > 1 && `Search results: ${articles.length}`}</p>
       <div
         className={
           articles.length > 1
@@ -65,12 +66,13 @@ export const ArticleCard = ({ articles, setArticles }) => {
                     </Link>
                     <div>
                       <Card.Text> {article.created_at}</Card.Text>
-                      <small className="font-weight-bold">
+                      <Card.Text>Topic: {article.topic}</Card.Text>
+                      <p className="font-weight-bold">
                         Posted By: {article.author}
-                      </small>
+                      </p>
+                      <br />
                     </div>
                   </div>
-                  <Card.Text>Topic: {article.topic}</Card.Text>
                   {articles.length === 1 && (
                     <Card.Text className="flex-grow-1">
                       {article.body}
