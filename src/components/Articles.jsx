@@ -14,15 +14,15 @@ export default function Articles({ articles, setArticles }) {
   const topic = query.get("topic");
   const sort_by = query.get("sort_by");
   const order = query.get("order");
-  const limit = articles.length;
+  const limit = query.get("limit");
 
   useEffect(() => {
     setLoading(true);
-    allArticles(article_id, topic, sort_by, order, limit).then((data) => {
+    allArticles(topic, sort_by, order, limit).then((data) => {
       setArticles(data);
       setLoading(false);
     });
-  }, [article_id, topic, sort_by, order, limit]);
+  }, [article_id, topic, sort_by, order, limit, setArticles]);
 
   return (
     <main>

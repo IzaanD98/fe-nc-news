@@ -4,13 +4,11 @@ const articleAPI = axios.create({
   baseURL: "https://project-nc-news-db.onrender.com/api",
 });
 
-export const allArticles = (article_id, topic, sort_by, order, limit) => {
-  let url = article_id ? `/articles/${article_id}` : "/articles";
-  if (topic || sort_by || order) {
-    url = `/articles?${topic ? "topic=" + topic : ""}${
-      sort_by ? "&sort_by=" + sort_by : ""
-    }${order ? "&order=" + order : ""}${limit ? "&limit=" + limit : ""}`;
-  }
+export const allArticles = (topic, sort_by, order, limit) => {
+  let url = `/articles?${topic ? "topic=" + topic : ""}${
+    sort_by ? "&sort_by=" + sort_by : ""
+  }${order ? "&order=" + order : ""}${limit ? "&limit=" + limit : ""}`;
+
   return articleAPI.get(url).then(({ data }) => {
     return data.articles;
   });
@@ -43,5 +41,11 @@ export const postCommentForArticle = (article_id, comment) => {
 export const getAllTopics = () => {
   return articleAPI.get("/topics").then(({ data }) => {
     return data.topics;
+  });
+};
+
+export const getSingleArticle = (article_id) => {
+  return articleAPI.get(`/articles/${article_id}`).then(({ data }) => {
+    return data.articles;
   });
 };

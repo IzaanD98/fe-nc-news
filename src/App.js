@@ -3,25 +3,38 @@ import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import Articles from "./components/Articles";
+import { SingleArticle } from "./components/SingleArticle";
 import { ThemeContext } from "./contexts/Theme";
 import { useContext, useState } from "react";
 
 function App() {
-  const [articles, setArticles] = useState([]);
   const { theme } = useContext(ThemeContext);
+  const [articles, setArticles] = useState([]);
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState("");
+
   return (
     <div className={theme === "light" ? "light-theme" : "dark-theme"}>
-      <Navigation articles={articles} />
-      <Header />
+      <Navigation
+        selectedTopic={selectedTopic}
+        setSelectedTopic={setSelectedTopic}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+        selectedOrder={selectedOrder}
+        setSelectedOrder={setSelectedOrder}
+      />
+      <Header
+        setSelectedOrder={setSelectedOrder}
+        setSelectedSort={setSelectedSort}
+        setSelectedTopic={setSelectedTopic}
+      />
       <Routes>
         <Route
           path="/"
           element={<Articles articles={articles} setArticles={setArticles} />}
         />
-        <Route
-          path="/articles/:article_id"
-          element={<Articles articles={articles} setArticles={setArticles} />}
-        />
+        <Route path="/articles/:article_id" element={<SingleArticle />} />
         <Route
           path="/articles"
           element={<Articles articles={articles} setArticles={setArticles} />}
