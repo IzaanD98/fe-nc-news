@@ -32,6 +32,7 @@ function App() {
         setSelectedTopic={setSelectedTopic}
       />
       <Routes>
+        <Route path="/*" element={<h2>404 page not found!</h2>} />
         <Route
           path="/"
           element={
