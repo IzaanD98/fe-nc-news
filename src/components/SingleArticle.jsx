@@ -79,7 +79,7 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
   if (error) {
     return (
       <h2 className="text-center" style={{ color: "red" }}>
-        {error.message}
+        {error.response.data.message}
       </h2>
     );
   }

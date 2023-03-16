@@ -144,6 +144,24 @@ export default function Navigation({
                 </div>
               </Nav.Item>
             )}
+            {isSingleArticle === false && (
+              <Nav.Item>
+                <div className="nav-link">
+                  <label htmlFor="Post">
+                    Post
+                    <Form.Select
+                      // onChange={}
+                      id="Order"
+                      // value={}
+                      size="md"
+                    >
+                      <option>Post article</option>
+                      <option>Post topic</option>
+                    </Form.Select>
+                  </label>
+                </div>
+              </Nav.Item>
+            )}
             <Nav.Item>
               <Nav.Link>
                 <ToggleTheme />
