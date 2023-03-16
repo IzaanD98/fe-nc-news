@@ -7,7 +7,11 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export default function Articles({ articles, setArticles }) {
+export default function Articles({
+  articles,
+  setArticles,
+  setIsSingleArticle,
+}) {
   const [loading, setLoading] = useState(true);
   const { article_id } = useParams();
   const query = useQuery();
@@ -20,9 +24,18 @@ export default function Articles({ articles, setArticles }) {
     setLoading(true);
     allArticles(topic, sort_by, order, limit).then((data) => {
       setArticles(data);
+      setIsSingleArticle(false);
       setLoading(false);
     });
-  }, [article_id, topic, sort_by, order, limit, setArticles]);
+  }, [
+    article_id,
+    topic,
+    sort_by,
+    order,
+    limit,
+    setArticles,
+    setIsSingleArticle,
+  ]);
 
   return (
     <main>

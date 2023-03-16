@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleArticle } from "../utils/api";
 
-export const SingleArticle = () => {
+export const SingleArticle = ({ setIsSingleArticle }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const { article_id } = useParams();
   const [article, setArticle] = useState([]);
@@ -18,9 +18,10 @@ export const SingleArticle = () => {
     setLoading(true);
     getSingleArticle(article_id).then((data) => {
       setArticle(data);
+      setIsSingleArticle(true);
       setLoading(false);
     });
-  }, [article_id]);
+  }, [article_id, setIsSingleArticle]);
 
   const Vote = (id, number) => {
     setArticle((currentArticles) => {

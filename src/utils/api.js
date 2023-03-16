@@ -49,3 +49,9 @@ export const getSingleArticle = (article_id) => {
     return data.articles;
   });
 };
+
+export const deleteCommentById = (comment_id) => {
+  return articleAPI.delete(`/comments/${comment_id}`).then(({ data }) => {
+    return data.articles;
+  });
+};
