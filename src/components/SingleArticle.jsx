@@ -13,14 +13,20 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
   const { article_id } = useParams();
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setError(null);
     setLoading(true);
-    getSingleArticle(article_id).then((data) => {
-      setArticle(data);
-      setIsSingleArticle(true);
-      setLoading(false);
-    });
+    getSingleArticle(article_id)
+      .then((data) => {
+        setArticle(data);
+        setIsSingleArticle(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+      });
   }, [article_id, setIsSingleArticle]);
 
   const Vote = (id, number) => {
@@ -48,6 +54,13 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
         });
       });
   };
+  if (error) {
+    return (
+      <h2 className="text-center" style={{ color: "red" }}>
+        {error.message}
+      </h2>
+    );
+  }
   if (loading) {
     return <h2 className="loading">Loading....</h2>;
   }
