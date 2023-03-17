@@ -102,12 +102,30 @@
 
 .title {
   color: #fbf9f9;
-  background-color: #394c6b;
+  background-color: #102542;
   margin-top: 15px;
-  border: 2px solid black;
-  border-radius: 20px;
-  padding: 10px;
-  width: fit-content;
+  border: 3px solid #f9d71c;
+  border-radius: 50px;
+  padding: 10px 20px;
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px #f9d71c;
+}
+
+.accent {
+  color: #f9d71c;
+  font-family: "Bungee", cursive;
+}
+
+.dark-theme .title {
+  background-color: #121212;
+  border-color: #f9d71c;
+  box-shadow: none;
+}
+
+.dark-theme .title .accent {
+  color: #ffffff;
 }
 
 .text-center {

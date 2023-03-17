@@ -16,7 +16,8 @@ export default function Header({
     <div className="text-center">
       <Link to="/" style={{ textDecoration: "none" }}>
         <h1 onClick={handleClick} className="title">
-          InsightCorner
+          <span>Insight</span>
+          <span className="accent">Corner</span>
         </h1>
       </Link>
     </div>
