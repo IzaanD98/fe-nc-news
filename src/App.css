@@ -138,3 +138,17 @@
 .font-weight-bold {
   font-weight: 600;
 }
+
+.form-center {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.form-group {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}

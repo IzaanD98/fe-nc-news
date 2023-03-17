@@ -69,3 +69,15 @@ export const deleteArticleById = (article_id) => {
     return data.articles;
   });
 };
+
+export const postTopic = (topic) => {
+  return articleAPI.post(`/topics`, topic).then(({ data }) => {
+    return data.newTopic;
+  });
+};
+
+export const postArticle = (article) => {
+  return articleAPI.post(`/articles`, article).then(({ data }) => {
+    return data.newArticle;
+  });
+};

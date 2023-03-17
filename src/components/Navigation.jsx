@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/User";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -15,27 +15,30 @@ export default function Navigation({
   selectedOrder,
   setSelectedOrder,
   isSingleArticle,
+  post,
+  setPost,
+  setIsSingleArticle,
+  topics,
+  setTopics,
 }) {
-  const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllTopics().then((data) => {
       setTopics(data);
     });
-  }, []);
+  }, [setTopics]);
 
   const handleSelect = (event) => {
     setSelectedTopic(event.target.value);
     if (event.target.value === "All") {
       navigate(`/`);
-      setSelectedSort("");
-      setSelectedOrder("");
     } else {
       navigate(`articles?topic=${event.target.value}`);
-      setSelectedSort("");
-      setSelectedOrder("");
     }
+    setPost("");
+    setSelectedSort("");
+    setSelectedOrder("");
   };
 
   const handleSort = (event) => {
@@ -55,6 +58,7 @@ export default function Navigation({
         navigate(`/articles?sort_by=${newSortValue}`);
       }
     }
+    setPost("");
     setSelectedOrder("");
   };
 
@@ -71,6 +75,17 @@ export default function Navigation({
     } else {
       navigate(`/articles?order=${event.target.value}`);
     }
+    setPost("");
+  };
+
+  const handlePost = (event) => {
+    setPost(event.target.value);
+    if (event.target.value === "add-article") {
+      navigate("/post/article");
+    } else if (event.target.value === "add-topic") {
+      navigate("/post/topic");
+    }
+    setIsSingleArticle(true);
   };
 
   const user = useContext(UserContext);
@@ -150,13 +165,14 @@ export default function Navigation({
                   <label htmlFor="Post">
                     Post
                     <Form.Select
-                      // onChange={}
+                      onChange={handlePost}
                       id="Order"
-                      // value={}
                       size="md"
+                      value={post}
                     >
-                      <option>Post article</option>
-                      <option>Post topic</option>
+                      <option>Select</option>
+                      <option value="add-article">Post article</option>
+                      <option value="add-topic">Post topic</option>
                     </Form.Select>
                   </label>
                 </div>

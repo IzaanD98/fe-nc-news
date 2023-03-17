@@ -63,17 +63,22 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
   };
 
   const handleDelete = (article_id) => {
-    setDeleting(true);
-    deleteArticleById(article_id)
-      .then((data) => {
-        setDeleting(false);
-        alert("Successfully Deleted Article");
-        navigate("/");
-      })
-      .catch((error) => {
-        setDeleting(false);
-        alert("Failed to delete article, please try again");
-      });
+    const result = window.confirm(
+      "Are you sure you want to delete this article?"
+    );
+    if (result) {
+      setDeleting(true);
+      deleteArticleById(article_id)
+        .then((data) => {
+          setDeleting(false);
+          alert("Successfully Deleted Article");
+          navigate("/");
+        })
+        .catch((error) => {
+          setDeleting(false);
+          alert("Failed to delete article, please try again");
+        });
+    }
   };
 
   if (error) {
@@ -118,7 +123,7 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
                           onClick={() => handleDelete(a.article_id)}
                           disabled={deleting}
                         >
-                          {deleting ? "Delete" : "Deleting"}
+                          {deleting ? "Deleting" : "Delete"}
                         </Button>
                       )}
                     </div>

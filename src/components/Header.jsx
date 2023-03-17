@@ -3,11 +3,13 @@ export default function Header({
   setSelectedOrder,
   setSelectedSort,
   setSelectedTopic,
+  setPost,
 }) {
   const handleClick = () => {
     setSelectedOrder("");
     setSelectedSort("");
     setSelectedTopic("");
+    setPost("");
   };
 
   return (

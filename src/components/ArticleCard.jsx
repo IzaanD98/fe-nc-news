@@ -35,6 +35,15 @@ export const ArticleCard = ({ articles, setArticles }) => {
         });
       });
   };
+
+  if (articles.length === 0) {
+    return (
+      <h2 style={{ color: "red" }} className="text-center">
+        No Articles Found
+      </h2>
+    );
+  }
+
   return (
     <div className="container my-5">
       <p>
