@@ -159,25 +159,24 @@ export default function Navigation({
                 </div>
               </Nav.Item>
             )}
-            {isSingleArticle === false && (
-              <Nav.Item>
-                <div className="nav-link">
-                  <label htmlFor="Post">
-                    Post
-                    <Form.Select
-                      onChange={handlePost}
-                      id="Order"
-                      size="md"
-                      value={post}
-                    >
-                      <option>Select</option>
-                      <option value="add-article">Post article</option>
-                      <option value="add-topic">Post topic</option>
-                    </Form.Select>
-                  </label>
-                </div>
-              </Nav.Item>
-            )}
+            <Nav.Item>
+              <div className="nav-link">
+                <label htmlFor="Post">
+                  Post
+                  <Form.Select
+                    onChange={handlePost}
+                    id="Order"
+                    size="md"
+                    value={post}
+                  >
+                    <option>Select</option>
+                    <option value="add-article">Post article</option>
+                    <option value="add-topic">Post topic</option>
+                  </Form.Select>
+                </label>
+              </div>
+            </Nav.Item>
+
             <Nav.Item>
               <Nav.Link>
                 <ToggleTheme />
