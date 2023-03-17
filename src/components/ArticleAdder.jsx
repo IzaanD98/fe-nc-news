@@ -15,7 +15,7 @@ export default function ArticleAdder({ topics, setArticles }) {
   const [postedArticle, setPostedArticle] = useState(false);
   const [failedPost, setFailedPost] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSumbit = (event) => {

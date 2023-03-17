@@ -81,3 +81,15 @@ export const postArticle = (article) => {
     return data.newArticle;
   });
 };
+
+export const getUsers = () => {
+  return articleAPI.get(`/users`).then(({ data }) => {
+    return data.users;
+  });
+};
+
+export const getUserInfo = (username) => {
+  return articleAPI.get(`/users/${username}`).then(({ data }) => {
+    return data.users;
+  });
+};

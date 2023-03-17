@@ -21,7 +21,7 @@ export default function Comments() {
   const [failedPostedComment, setFailedPostedComment] = useState(false);
   const [error, setError] = useState(null);
   const [commentWithError, setCommentWithError] = useState(null);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (article_id) {

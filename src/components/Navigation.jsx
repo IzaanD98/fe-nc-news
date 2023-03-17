@@ -94,7 +94,11 @@ export default function Navigation({
     console.log(event.target.value);
   };
 
-  const user = useContext(UserContext);
+  const handleUser = () => {
+    navigate("/user");
+  };
+
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -205,7 +209,7 @@ export default function Navigation({
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="user-info">
-              <Nav.Link>
+              <Nav.Link onClick={handleUser}>
                 <span>Logged in as:</span>
                 <br />
                 <img className="user-icon" src={user.avatar_url} alt="user" />

@@ -20,7 +20,7 @@ export const SingleArticle = ({ setIsSingleArticle }) => {
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const navigate = useNavigate();
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setError(null);
