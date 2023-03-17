@@ -8,6 +8,7 @@ NC News is a full-stack news aggregation and discussion forum application built 
 
 ## Usage
 
+- To post articles or comments, users must switch from guest accounts to registered accounts.
 - Browse articles by clicking on the "All" link in the navigation bar or by a specific topic.
 - Sort articles by votes, comments, or dates using the dropdown menu at the top of the page.
 - Change order to ascending or descending.
