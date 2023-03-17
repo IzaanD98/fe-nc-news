@@ -20,6 +20,7 @@ export default function Navigation({
   setIsSingleArticle,
   topics,
   setTopics,
+  setSearch,
 }) {
   const navigate = useNavigate();
 
@@ -86,6 +87,11 @@ export default function Navigation({
       navigate("/post/topic");
     }
     setIsSingleArticle(true);
+  };
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+    console.log(event.target.value);
   };
 
   const user = useContext(UserContext);
@@ -156,6 +162,22 @@ export default function Navigation({
                       <option value="asc">Ascending</option>
                     </Form.Select>
                   </label>
+                </div>
+              </Nav.Item>
+            )}
+            {isSingleArticle === false && (
+              <Nav.Item>
+                <div className="nav-link">
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formBasicText">
+                      <Form.Label>Search</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Search"
+                        onChange={handleSearch}
+                      />
+                    </Form.Group>
+                  </Form>
                 </div>
               </Nav.Item>
             )}

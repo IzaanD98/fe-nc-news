@@ -19,6 +19,7 @@ function App() {
   const [isSingleArticle, setIsSingleArticle] = useState("false");
   const [post, setPost] = useState("");
   const [topics, setTopics] = useState([]);
+  const [search, setSearch] = useState("");
 
   return (
     <div className={theme === "light" ? "light-theme" : "dark-theme"}>
@@ -35,6 +36,7 @@ function App() {
         setIsSingleArticle={setIsSingleArticle}
         topics={topics}
         setTopics={setTopics}
+        setSearch={setSearch}
       />
       <Header
         setSelectedOrder={setSelectedOrder}
@@ -54,6 +56,7 @@ function App() {
               articles={articles}
               setArticles={setArticles}
               setIsSingleArticle={setIsSingleArticle}
+              search={search}
             />
           }
         />
@@ -68,6 +71,7 @@ function App() {
               articles={articles}
               setArticles={setArticles}
               setIsSingleArticle={setIsSingleArticle}
+              search={search}
             />
           }
         />

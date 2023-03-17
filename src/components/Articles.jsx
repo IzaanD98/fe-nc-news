@@ -11,6 +11,7 @@ export default function Articles({
   articles,
   setArticles,
   setIsSingleArticle,
+  search,
 }) {
   const [loading, setLoading] = useState(true);
   const { article_id } = useParams();
@@ -20,6 +21,8 @@ export default function Articles({
   const order = query.get("order");
   const limit = query.get("limit");
   const [error, setError] = useState(null);
+  const [filteredArticles, setFilteredArticles] = useState(null);
+
   useEffect(() => {
     setError(null);
     setLoading(true);
@@ -42,6 +45,17 @@ export default function Articles({
     setIsSingleArticle,
   ]);
 
+  useEffect(() => {
+    if (search) {
+      const filteredArticles = articles.filter((article) =>
+        article.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredArticles(filteredArticles);
+    } else {
+      setFilteredArticles(null);
+    }
+  }, [search, articles]);
+
   if (error) {
     return (
       <h2 className="text-center" style={{ color: "red" }}>
@@ -55,7 +69,10 @@ export default function Articles({
       {loading ? (
         <h2 className="loading">Loading....</h2>
       ) : (
-        <ArticleCard articles={articles} setArticles={setArticles} />
+        <ArticleCard
+          articles={filteredArticles || articles}
+          setArticles={setArticles}
+        />
       )}
     </main>
   );
