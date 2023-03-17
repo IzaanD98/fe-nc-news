@@ -38,7 +38,7 @@ git clone https://github.com/IzaanD98/fe-nc-news.git
 2. Change into the project directory:
 
 ```
-cd nc-news-frontend
+cd fe-nc-news
 ```
 
 3. Install the dependencies:
