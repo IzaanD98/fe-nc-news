@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# InsightCorner - Project NC News
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Link to deployed version : https://insightcorner.netlify.app/
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+NC News is a full-stack news aggregation and discussion forum application built with React, Bootstrap, Node.js, Express, and PostgreSQL. Users can browse articles, sort articles by votes, comments, and dates, post new comments and vote on articles and comments. You can also create new articles and topics.
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Browse articles by clicking on the "All" link in the navigation bar or by a specific topic.
+- Sort articles by votes, comments, or dates using the dropdown menu at the top of the page.
+- Change order to ascending or descending.
+- Change the theme of the application to dark or light with a click of a button
+- Click on an article to view its details, including comments and votes.
+- Post a new comment by clicking on the "Add Comment" button and filling out the form.
+- Vote on an article or comment by clicking on the upvote or downvote next to its score.
+- Create a new article or topic by clicking on the "Create Article" or "Create Topic" button in the navigation bar and filling out the form.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This repository contains the front-end client application, which communicates with the back-end RESTful API hosted on render.
 
-### `npm test`
+Link for Backend Repo : https://github.com/IzaanD98/be-nc-news
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Link for hosted version: https://project-nc-news-db.onrender.com/api - Returns all available endpoints.
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run the project locally, you must have Node.js installed on your machine. The minimum version of Node.js required is v14.17.6.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone this repository to your local machine:
 
-### `npm run eject`
+```
+git clone https://github.com/IzaanD98/fe-nc-news.git
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Change into the project directory:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+cd nc-news-frontend
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Install the dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+npm install
+```
 
-## Learn More
+4. To start the development server, run the following command:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application should now be available at http://localhost:3000.
 
-### Code Splitting
+### Built With
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+React - JavaScript library for building user interfaces
+Node.js - JavaScript runtime built on Chrome's V8 JavaScript engine
+Express - Fast, unopinionated, minimalist web framework for Node.js
+PostgreSQL - Powerful, open-source object-relational database syst
