@@ -11,7 +11,7 @@ export default function CommentAdder({
   setPostedComment,
   setFailedPostedComment,
 }) {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { article_id } = useParams();
   const [commentToAdd, setCommentToAdd] = useState("");
   const [postingComment, setPostingComment] = useState(false);

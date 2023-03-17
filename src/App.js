@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import Footer from "./components/Footer";
 import TopicAdder from "./components/TopicAdder";
 import ArticleAdder from "./components/ArticleAdder";
+import { UserInfo } from "./components/UserInfo";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -83,6 +84,7 @@ function App() {
           path="/post/article"
           element={<ArticleAdder topics={topics} setArticles={setArticles} />}
         />
+        <Route path="/user" element={<UserInfo />} />
       </Routes>
       <Footer />
     </div>
