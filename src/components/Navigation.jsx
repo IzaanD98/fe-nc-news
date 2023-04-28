@@ -99,6 +99,7 @@ export default function Navigation({
     setSelectedOrder("");
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleSort = (event) => {
     const newSortValue = event.target.value;
     setSelectedSort(newSortValue);
@@ -120,6 +121,7 @@ export default function Navigation({
     setSelectedOrder("");
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleOrder = (event) => {
     setSelectedOrder(event.target.value);
     if (selectedSort && selectedTopic === "All") {
