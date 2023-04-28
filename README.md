@@ -4,7 +4,7 @@ Link to deployed version : https://insightcorner.netlify.app/
 
 ## Overview
 
-NC News is a full-stack news aggregation and discussion forum application built with React, Bootstrap, Node.js, Express, and PostgreSQL. Users can browse articles, sort articles by votes, comments, and dates, post new comments and vote on articles and comments. You can also create new articles and topics.
+NC News is a full-stack news and discussion forum application built with React, Bootstrap, Node.js, Express, and PostgreSQL. Users can browse articles, sort articles by votes, comments, and dates, post new comments and vote on articles and comments. You can also create new articles and topics.
 
 ## Usage
 
