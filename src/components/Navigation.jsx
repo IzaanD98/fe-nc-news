@@ -6,6 +6,63 @@ import { Form } from "react-bootstrap";
 import { getAllTopics } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import ToggleTheme from "./ToggleTheme";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+
+function SortingButtons({
+  selectedSort,
+  setSelectedSort,
+  selectedOrder,
+  setSelectedOrder,
+}) {
+  const navigate = useNavigate();
+
+  const handleClick = (sort) => {
+    let newOrder = "asc";
+    if (selectedSort === sort && selectedOrder === "asc") {
+      newOrder = "desc";
+    }
+    setSelectedSort(sort);
+    setSelectedOrder(newOrder);
+
+    let sortQuery = `?sort_by=${sort}&order=${newOrder}`;
+    navigate(`/articles${sortQuery}`);
+  };
+
+  const getButtonVariant = (sort) => {
+    return selectedSort === sort ? "primary" : "outline-primary";
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <p style={{ color: "grey", margin: 0 }}>Sort By:</p>
+
+      <ButtonGroup>
+        <Button
+          style={{ color: "white" }}
+          variant={getButtonVariant("comment_count")}
+          onClick={() => handleClick("comment_count")}
+        >
+          Comment Count
+        </Button>
+        <Button
+          style={{ color: "white" }}
+          variant={getButtonVariant("created_at")}
+          onClick={() => handleClick("created_at")}
+        >
+          Date
+        </Button>
+        <Button
+          style={{ color: "white" }}
+          variant={getButtonVariant("votes")}
+          onClick={() => handleClick("votes")}
+        >
+          Votes
+        </Button>
+      </ButtonGroup>
+    </div>
+  );
+}
 
 export default function Navigation({
   selectedTopic,
@@ -131,50 +188,18 @@ export default function Navigation({
               </Nav.Item>
             )}
             {isSingleArticle === false && (
-              <Nav.Item>
-                <div className="nav-link">
-                  <label htmlFor="Sort_By">
-                    Sort By
-                    <Form.Select
-                      onChange={handleSort}
-                      id="Sort_By"
-                      value={selectedSort}
-                      size="md"
-                    >
-                      <option>none</option>
-                      <option value="comment_count">comment count</option>
-                      <option value="created_at">date</option>
-                      <option value="votes">votes</option>
-                    </Form.Select>
-                  </label>
-                </div>
-              </Nav.Item>
-            )}
-
-            {isSingleArticle === false && (
-              <Nav.Item>
-                <div className="nav-link">
-                  <label htmlFor="Order">
-                    Order
-                    <Form.Select
-                      onChange={handleOrder}
-                      id="Order"
-                      value={selectedOrder}
-                      size="md"
-                    >
-                      <option value="desc">Descending</option>
-                      <option value="asc">Ascending</option>
-                    </Form.Select>
-                  </label>
-                </div>
-              </Nav.Item>
+              <SortingButtons
+                selectedSort={selectedSort}
+                setSelectedSort={setSelectedSort}
+                selectedOrder={selectedOrder}
+                setSelectedOrder={setSelectedOrder}
+              />
             )}
             {isSingleArticle === false && (
               <Nav.Item>
-                <div className="nav-link">
+                <div className="nav-link" style={{ marginTop: "20px" }}>
                   <Form>
                     <Form.Group className="mb-3" controlId="formBasicText">
-                      <Form.Label>Search</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Search"
